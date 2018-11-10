@@ -1,3 +1,6 @@
 {
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "javascript.validate.enable": false,
+  "standard.autoFixOnSave": true,
+  "eslint.enable": false
 }
