@@ -1,21 +1,17 @@
 import {
   GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLString
+  GraphQLObjectType
 } from 'graphql'
+
+import { ping } from './queries'
 
 const Schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
-      hello: {
-        type: GraphQLString,
-        resolve() {
-          return 'world'
-        }
-      }
+      ping
     }
   })
 })
 
-console.log(Schema)
+export default Schema
