@@ -18,8 +18,6 @@ const getTaskList = {
       $id: id
     }, (err, tasks) => {
       if (err) throw err
-
-      console.log(tasks)
       tasklist.concat(tasks)
     })
     return tasklist
