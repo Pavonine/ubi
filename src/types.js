@@ -1,4 +1,5 @@
 import {
+  GraphQLInputObjectType,
   GraphQLObjectType,
   GraphQLBoolean,
   GraphQLList,
@@ -35,7 +36,24 @@ const TaskList = new GraphQLObjectType({
   }
 })
 
+const CreateTaskInput = new GraphQLInputObjectType({
+  name: 'CreateTaskInput',
+  fields: {
+    text: {
+      type: GraphQLString,
+      defaultValue: 'Enter your task here',
+      description: 'Task text'
+    },
+    isCompleted: {
+      type: GraphQLBoolean,
+      defaultValue: false,
+      description: 'State of the task'
+    }
+  }
+})
+
 export {
   Task,
-  TaskList
+  TaskList,
+  CreateTaskInput
 }

@@ -1,26 +1,30 @@
 import {
   GraphQLString,
-  GraphQLID,
-  GraphQLList
+  GraphQLID
+  // GraphQLList
 } from 'graphql'
 import { Task } from './types'
 
-const getTaskList = {
-  type: new GraphQLList(Task),
+const getTaskById = {
+  type: Task || null,
   args: {
     id: {
       type: GraphQLID
     }
   },
   resolve (_, { id }, { db }) {
-    let tasklist = []
-    db.all('SELECT * FROM tasklist WHERE id=$id', {
+    let task
+    db.get('SELECT * FROM tasklist WHERE id=$id', {
       $id: id
-    }, (err, tasks) => {
+    }, (err, tsk) => {
       if (err) throw err
-      tasklist.concat(tasks)
+      if (tsk === undefined) {
+        task = null
+      } else {
+        task = tsk
+      }
     })
-    return tasklist
+    return task
   }
 }
 
@@ -31,7 +35,7 @@ const ping = {
   }
 }
 
-export {
-  getTaskList,
+export default {
+  getTaskById,
   ping
 }

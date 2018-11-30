@@ -4,17 +4,34 @@ import {
   GraphQLBoolean
 } from 'graphql'
 import {
-  Task
+  Task,
+  CreateTaskInput
 } from './types'
 
 const createTask = {
-  type: Task,
+  type: GraphQLString,
   args: {
-    text: GraphQLString,
-    isCompleted: GraphQLBoolean
+    input: {
+      type: CreateTaskInput
+    }
   },
-  resolve (_, { text, isCompleted }, { db }) {
-    return {}
+  resolve (_, {
+    input: {
+      text,
+      isCompleted
+    }
+  }, { db }) {
+    if (text && isCompleted) {
+      db.run('INSERT INTO tasklist (text, isCompleted) VALUES (?, ?)', [
+        text,
+        isCompleted
+      ], (err) => {
+        if (err) throw err
+        return 'success'
+      })
+    } else {
+      return 'nahhh'
+    }
   }
 }
 
@@ -40,8 +57,8 @@ const deleteTask = {
   }
 }
 
-export {
-  createTask,
-  updateTask,
-  deleteTask
+export default {
+  createTask
+  // updateTask,
+  // deleteTask
 }
