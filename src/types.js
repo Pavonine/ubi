@@ -53,8 +53,27 @@ const CreateTaskInput = new GraphQLInputObjectType({
   }
 })
 
+const UpdateTaskInput = new GraphQLInputObjectType({
+  name: 'UpdateTaskInput',
+  fields: {
+    id: {
+      type: GraphQLInt,
+      description: 'ID of the task to update'
+    },
+    text: {
+      type: GraphQLString,
+      description: 'Updated text if any'
+    },
+    isCompleted: {
+      type: GraphQLBoolean,
+      description: 'Updated value if task is completed or not'
+    }
+  }
+})
+
 export {
   Task,
   TaskList,
-  CreateTaskInput
+  CreateTaskInput,
+  UpdateTaskInput
 }
