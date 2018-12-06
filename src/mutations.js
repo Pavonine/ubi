@@ -9,7 +9,7 @@ import {
 } from './types'
 
 const createTask = {
-  type: GraphQLString,
+  type: Task,
   args: {
     input: {
       type: CreateTaskInput
@@ -22,15 +22,22 @@ const createTask = {
     }
   }, { db }) {
     if (text && isCompleted) {
-      db.run('INSERT INTO tasklist (text, isCompleted) VALUES (?, ?)', [
-        text,
-        isCompleted
-      ], (err) => {
-        if (err) throw err
-        return 'success'
+      return new Promise((resolve, reject) => {
+        db.run('INSERT INTO tasklist (text, isCompleted) VALUES (?, ?)', [
+          text,
+          isCompleted
+        ], (err) => {
+          if (err) reject(err)
+        }).get('SELECT * FROM tasklist ORDER BY id DESC LIMIT 1', (err, row) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(row)
+          }
+        })
       })
     } else {
-      return 'nahhh'
+      return {}
     }
   }
 }

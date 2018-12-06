@@ -3,14 +3,15 @@ import {
   GraphQLObjectType,
   GraphQLBoolean,
   GraphQLList,
-  GraphQLString
+  GraphQLString,
+  GraphQLInt
 } from 'graphql'
 
 const Task = new GraphQLObjectType({
   name: 'Task',
   fields: {
     id: {
-      type: GraphQLString
+      type: GraphQLInt
     },
     text: {
       type: GraphQLString
@@ -25,7 +26,7 @@ const TaskList = new GraphQLObjectType({
   name: 'TaskList',
   fields: {
     id: {
-      type: GraphQLString
+      type: GraphQLInt
     },
     name: {
       type: GraphQLString
